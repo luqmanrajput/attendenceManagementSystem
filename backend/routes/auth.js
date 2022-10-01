@@ -42,22 +42,22 @@ router.post(
       const secPass = await bcrypt.hash(req.body.password, salt);
 
       // b-adding user to database
+      console.log(secPass);
       user = await User.create({
         name: req.body.name,
         email: req.body.email,
-        passsword: secPass,
+        password: secPass,
       });
-
       //   Generating Token
       const Data = {
         user: {
           id: user.id,
         },
       };
-
       const authToken = jwt.sign(Data, JWT_SECRET);
       success = true;
       res.json({ success, authToken });
+      console.log(success);
     } catch (error) {
       console.log(error.message);
       res.status(500).json({ error: "Internal server error occured" });

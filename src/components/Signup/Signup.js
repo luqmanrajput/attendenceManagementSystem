@@ -36,7 +36,9 @@ const Signup = () => {
         );
 
         // Redirecting if Signup is successful
-        const json = response.json();
+        const json = await response.json();
+        console.log(json.success);
+        console.log(json.authToken);
         if (json.success) {
           localStorage.setItem("token", json.authToken);
           navigate("/Login");
