@@ -1,54 +1,37 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login = (props) => {
+const AdminLogin = () => {
   // Storing Credentials
+  const adminEmail = "luqman@gmail.com";
+  const adminPass = "123";
   const [credentials, setCredentials] = useState({ email: "", password: "" });
 
-  // For redirecting after successfull login
+  // For Redirecting
   let navigate = useNavigate();
 
-  // for handling Login
-  const loginHandler = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: credentials.email,
-          password: credentials.password,
-        }),
-      });
-
-      const json = await response.json();
-      console.log(json.success, json.authToken, json.roleCheck);
-      if (json.success) {
-        localStorage.setItem("token", json.authToken);
-        localStorage.setItem("roleCheck", json.roleCheck);
-        navigate("/");
-        alert(`Welcome to eNotes!`, "success");
-      } else {
-        alert(`Invalid Credentials`, "danger");
-      }
-    } catch (error) {
-      console.log(error);
-      alert(`An error occured`, "danger");
-    }
-  };
-
-  // For handling entered values
+  // For Handling Entered Values
   const changeHandler = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
+  // for Handling Login Submit
+  const loginHandler = async (e) => {
+    e.preventDefault();
+    if (
+      credentials.email === adminEmail &&
+      credentials.password === adminPass
+    ) {
+      localStorage.setItem("roleCheck", "admin");
+      navigate("/");
+      alert(`Welcome to eNotes!`, "success");
+    }
+  };
   return (
     <>
       {/* Login Form */}
       <div className="container mt-5">
-        <h2>Login to continue!</h2>
+        <h2>Admin Login</h2>
         <form onSubmit={loginHandler}>
           <div className="mb-3">
             <label htmlFor="email" className="form-label">
@@ -86,4 +69,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default AdminLogin;

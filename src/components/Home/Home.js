@@ -1,5 +1,5 @@
 import React from "react";
-import Login from "../Login/Login";
+import UserLogin from "../Login/UserLogin";
 import AdminPanel from "./AdminPanel";
 import UserPanel from "./UserPanel";
 
@@ -11,7 +11,7 @@ const Home = () => {
       ) : localStorage.getItem("roleCheck") === "admin" ? (
         <AdminPanel />
       ) : (
-        <Login />
+        <UserLogin />
       )}
     </>
   );

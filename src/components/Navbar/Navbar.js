@@ -7,10 +7,12 @@ const Navbar = () => {
 
   // Removing token and redirecting to login page
   const navigate = useNavigate();
+
+  // Logging Out
   const logoutHandler = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("roleCheck");
-    navigate("/Login");
+    navigate("/UserLogin");
   };
   return (
     <>
@@ -57,7 +59,8 @@ const Navbar = () => {
                 </Link>
               </li>
             </ul>
-            {localStorage.getItem("token") ? (
+            {localStorage.getItem("roleCheck") === "admin" ||
+            localStorage.getItem("roleCheck") === "user" ? (
               <Link
                 className="btn btn-primary mx-1"
                 to="/Login"
@@ -85,12 +88,12 @@ const Navbar = () => {
                     </Link>
                     <ul className="dropdown-menu">
                       <li>
-                        <Link className="dropdown-item" to="/Login">
+                        <Link className="dropdown-item" to="/UserLogin">
                           As User
                         </Link>
                       </li>
                       <li>
-                        <Link className="dropdown-item" to="#">
+                        <Link className="dropdown-item" to="/AdminLogin">
                           As Admin
                         </Link>
                       </li>
