@@ -102,8 +102,10 @@ router.post(
       };
       const authToken = jwt.sign(Data, JWT_SECRET);
       success = true;
-      console.log(success + authToken);
-      res.json({ success, authToken });
+
+      const roleCheck = user.role;
+      console.log(success + authToken + roleCheck);
+      res.json({ success, authToken, roleCheck });
     } catch (error) {
       console.log(error.message);
       res.status(500).json({ error: "Internal server error occured" });

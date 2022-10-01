@@ -24,9 +24,10 @@ const Login = (props) => {
       });
 
       const json = await response.json();
-      console.log(json.success, json);
+      console.log(json.success, json.authToken, json.roleCheck);
       if (json.success) {
         localStorage.setItem("token", json.authToken);
+        localStorage.setItem("roleCheck", json.roleCheck);
         navigate("/");
         alert(`Welcome to eNotes!`, "success");
       } else {
