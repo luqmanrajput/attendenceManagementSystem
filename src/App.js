@@ -5,6 +5,8 @@ import UserLogin from "./components/Login/UserLogin";
 import AdminLogin from "./components/Login/AdminLogin";
 import Home from "./components/Home/Home";
 import Navbar from "./components/Navbar/Navbar";
+import AdminPanel from "./components/Home/AdminPanel";
+import UserPanel from "./components/Home/UserPanel";
 function App() {
   return (
     <>
@@ -12,9 +14,37 @@ function App() {
         <Navbar />
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/Signup" element={<Signup />} />
-          <Route exact path="/UserLogin" element={<UserLogin />} />
-          <Route exact path="/AdminLogin" element={<AdminLogin />} />
+          <Route
+            exact
+            path="/Signup"
+            element={
+              localStorage.getItem("roleCheck") === "null" ? <Signup /> : ""
+            }
+          />
+          <Route
+            exact
+            path="/UserLogin"
+            element={
+              localStorage.getItem("roleCheck") === "user" &&
+              localStorage.getItem("roleCheck") !== "admin" ? (
+                <UserPanel />
+              ) : (
+                <UserLogin />
+              )
+            }
+          />
+          <Route
+            exact
+            path="/AdminLogin"
+            element={
+              localStorage.getItem("roleCheck") === "admin" &&
+              localStorage.getItem("roleCheck") !== "user" ? (
+                <AdminPanel />
+              ) : (
+                <AdminLogin />
+              )
+            }
+          />
         </Routes>
       </Router>
     </>

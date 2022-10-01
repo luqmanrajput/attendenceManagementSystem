@@ -63,7 +63,7 @@ const Navbar = () => {
             localStorage.getItem("roleCheck") === "user" ? (
               <Link
                 className="btn btn-primary mx-1"
-                to="/Login"
+                to="/UserLogin"
                 onClick={logoutHandler}
                 role="button"
               >
