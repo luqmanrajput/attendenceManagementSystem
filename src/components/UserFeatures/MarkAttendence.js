@@ -1,9 +1,8 @@
 import React from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const MarkAttendence = () => {
-  // For redirecting
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // Current Date
   const showDate = new Date();
   const todaysDate =
@@ -12,7 +11,8 @@ const MarkAttendence = () => {
     showDate.getMonth() +
     "-" +
     showDate.getFullYear();
-  const attendenceHandler = async () => {
+  const attendenceHandler = async (e) => {
+    e.preventDefault();
     try {
       const response = await fetch(
         "http://localhost:5000/api/userfeatures/markattendence",
@@ -27,10 +27,12 @@ const MarkAttendence = () => {
       );
       const json = await response.json();
       console.log(json.success, json.dateCheck);
-      if (json.dateCheck !== "false") {
-        alert("Present");
+      if (json.dateCheck.toString() === "false") {
+        navigate("/UserPanel");
+        alert("Already Marked");
       } else {
-        alert("already marked");
+        navigate("/UserPanel");
+        alert("present");
       }
     } catch (error) {
       console.log(error);
@@ -39,7 +41,7 @@ const MarkAttendence = () => {
   return (
     <>
       <div className="container">
-        <form>
+        <form onSubmit={attendenceHandler}>
           <h3> Mark Your Attendence</h3>
           <hr />
           <label htmlFor="todaysDate" className="mt-2">
@@ -53,9 +55,7 @@ const MarkAttendence = () => {
             className="mt-3"
           />
           <br />
-          <button className="btn btn-primary mt-2" onClick={attendenceHandler}>
-            Present
-          </button>
+          <button className="btn btn-primary mt-2">Present</button>
         </form>
       </div>
     </>

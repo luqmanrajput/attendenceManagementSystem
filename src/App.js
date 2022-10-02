@@ -10,6 +10,7 @@ import MarkAttendence from "./components/UserFeatures/MarkAttendence";
 import UserPanel from "./components/Home/UserPanel";
 import ViewAttendence from "./components/UserFeatures/ViewAttendence";
 import ApplyLeave from "./components/UserFeatures/ApplyLeave";
+import AdminPanel from "./components/Home/AdminPanel";
 function App() {
   return (
     <>
@@ -17,48 +18,14 @@ function App() {
         <Navbar />
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route
-            exact
-            path="/Signup"
-            element={
-              localStorage.getItem("roleCheck") === "null" ? <Signup /> : ""
-            }
-          />
-          <Route
-            exact
-            path="/UserLogin"
-            element={
-              localStorage.getItem("token") ? <UserPanel /> : <UserLogin />
-            }
-          />
-          <Route
-            exact
-            path="/AdminLogin"
-            element={
-              localStorage.getItem("roleCheck") ? <Home /> : <AdminLogin />
-            }
-          />
-          <Route
-            exact
-            path="/MarkAttendence"
-            element={
-              localStorage.getItem("token") ? <MarkAttendence /> : <UserLogin />
-            }
-          />
-          <Route
-            exact
-            path="/ApplyLeave"
-            element={
-              localStorage.getItem("token") ? <ApplyLeave /> : <UserLogin />
-            }
-          />
-          <Route
-            exact
-            path="/ViewAttendence"
-            element={
-              localStorage.getItem("token") ? <ViewAttendence /> : <UserLogin />
-            }
-          />
+          <Route exact path="/Signup" element={<Signup />} />
+          <Route exact path="/UserLogin" element={<UserLogin />} />
+          <Route exact path="/AdminLogin" element={<AdminLogin />} />
+          <Route exact path="/UserPanel" element={<UserPanel />} />
+          <Route exact path="/AdminPanel" element={<AdminPanel />} />
+          <Route exact path="/MarkAttendence" element={<MarkAttendence />} />
+          <Route exact path="/ApplyLeave" element={<ApplyLeave />} />
+          <Route exact path="/ViewAttendence" element={<ViewAttendence />} />
         </Routes>
       </Router>
     </>
