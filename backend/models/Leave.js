@@ -11,7 +11,7 @@ const LeaveSchema = new Schema({
     required: true,
   },
   date: {
-    type: String,
+    type: Date,
   },
   category: {
     type: String,

@@ -44,7 +44,7 @@ const ApplyLeave = () => {
   };
   return (
     <>
-      <div className="container">
+      <div className="container mt-2">
         <form onSubmit={leaveHandler}>
           <h3>Submit your leave request</h3>
           <div className="mb-3">

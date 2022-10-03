@@ -40,7 +40,7 @@ const MarkAttendence = () => {
   };
   return (
     <>
-      <div className="container">
+      <div className="container mt-2">
         <form onSubmit={attendenceHandler}>
           <h3> Mark Your Attendence</h3>
           <hr />

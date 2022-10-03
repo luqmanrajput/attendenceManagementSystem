@@ -7,7 +7,7 @@ const AttendenceSchema = new Schema({
     ref: "user",
   },
   date: {
-    type: String,
+    type: Date,
   },
   hasMarked: {
     type: Boolean,

@@ -41,7 +41,7 @@ const Signup = () => {
         console.log(json.authToken);
         if (json.success) {
           localStorage.setItem("token", json.authToken);
-          navigate("/Login");
+          navigate("/UserLogin");
           alert("Registeration Success full now you can login!");
         } else {
           console.log("backend error");
