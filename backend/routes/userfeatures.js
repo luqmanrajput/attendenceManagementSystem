@@ -78,7 +78,8 @@ router.get("/viewattendence", fetchuser, async (req, res) => {
     if (!attendence) {
       return res.status(400).json({ success, error: " NO attendence found" });
     }
-    res.json(attendence);
+    success = true;
+    res.json({ success, attendence });
   } catch (error) {
     console.log(error);
   }

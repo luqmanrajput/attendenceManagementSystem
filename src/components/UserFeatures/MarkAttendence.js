@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const MarkAttendence = () => {
   const navigate = useNavigate();
@@ -41,9 +41,14 @@ const MarkAttendence = () => {
   return (
     <>
       <div className="container mt-2">
-        <form onSubmit={attendenceHandler}>
+        <div className="d-flex">
+          <Link to="/UserPanel" className="btn btn-primary mx-2">
+            Back
+          </Link>
           <h3> Mark Your Attendence</h3>
-          <hr />
+        </div>
+        <hr />
+        <form onSubmit={attendenceHandler}>
           <label htmlFor="todaysDate" className="mt-2">
             Add attendence for:
           </label>

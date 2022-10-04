@@ -14,6 +14,8 @@ app.use(cors());
 app.use("/api/auth", require("./routes/auth"));
 // User features
 app.use("/api/userfeatures", require("./routes/userfeatures"));
+// Admin features
+app.use("/api/adminfeatures", require("./routes/adminfeatures"));
 // Listening to port
 app.listen(port, () => {
   console.log(`Attendence Management System Listening at port:${port}`);

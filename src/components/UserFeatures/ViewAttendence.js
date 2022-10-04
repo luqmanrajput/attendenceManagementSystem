@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const ViewAttendence = () => {
-  const [attendence, setAttendence] = useState(null);
+  const [attendence, setAttendence] = useState();
 
   useEffect(() => {
     const fetchingUsers = async () => {
@@ -16,13 +17,23 @@ const ViewAttendence = () => {
         }
       );
       const json = await response.json();
-      setAttendence(json);
+      setAttendence(json.attendence);
     };
     fetchingUsers();
   }, []);
 
   const displayAttendence = (attendence) => {
-    if (!attendence.length) console.log("no attendence");
+    if (!attendence) {
+      console.log("no attendence");
+      return (
+        <tr>
+          <td>Loading...</td>
+          <td>Loading...</td>
+          <td>Loading...</td>
+        </tr>
+      );
+    }
+    debugger;
     return attendence.map((attendence, index) => (
       <tr key={index}>
         <th scope="row">{index + 1}</th>
@@ -34,7 +45,12 @@ const ViewAttendence = () => {
   return (
     <>
       <div className="container mt-2">
-        <h3>Your attendence</h3>
+        <div className="d-flex">
+          <Link to="/UserPanel" className="btn btn-primary mx-2">
+            Back
+          </Link>
+          <h3>Your attendence</h3>
+        </div>
         <hr />
         {/* Users Attendence */}
         <div>

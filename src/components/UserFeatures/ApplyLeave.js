@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 const ApplyLeave = () => {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
@@ -45,8 +45,14 @@ const ApplyLeave = () => {
   return (
     <>
       <div className="container mt-2">
-        <form onSubmit={leaveHandler}>
+        <div className="d-flex">
+          <Link to="/UserPanel" className="btn btn-primary mx-2">
+            Back
+          </Link>
           <h3>Submit your leave request</h3>
+        </div>
+        <hr />
+        <form onSubmit={leaveHandler}>
           <div className="mb-3">
             <label htmlFor="leaveDate" className="mt-2">
               Applying Leave for:
