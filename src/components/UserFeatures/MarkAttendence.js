@@ -8,7 +8,7 @@ const MarkAttendence = () => {
   const todaysDate =
     showDate.getDate() +
     "-" +
-    showDate.getMonth() +
+    (showDate.getMonth() + 1) +
     "-" +
     showDate.getFullYear();
   const attendenceHandler = async (e) => {

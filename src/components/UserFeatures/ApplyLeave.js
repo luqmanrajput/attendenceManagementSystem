@@ -7,7 +7,7 @@ const ApplyLeave = () => {
   const leaveDate =
     showDate.getDate() +
     "-" +
-    showDate.getMonth() +
+    (showDate.getMonth() + 1) +
     "-" +
     showDate.getFullYear();
 

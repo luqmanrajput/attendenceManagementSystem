@@ -1,7 +1,80 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const AttendenceRecord = () => {
+  const [email, setEmail] = useState("");
+  const [attendence, setAttendence] = useState(null);
+  const [totalPresent, setTotalPresent] = useState(null);
+
+  const changeHandler = (e) => {
+    setEmail(e.target.value);
+  };
+
+  // Fetching Attendence record from database
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      let key = email;
+      const response = await fetch(
+        `http://localhost:5000/api/adminfeatures/attendencerecord/${key}`,
+        {
+          method: "GET",
+        }
+      );
+      const json = await response.json();
+      console.log(json);
+      setAttendence(json.attendence);
+      setTotalPresent(json.attendence.length);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Displaying Attendence
+  const displayAttendence = (attendence) => {
+    if (!attendence) {
+      return (
+        <tr>
+          <th colSpan={4}>Search to view records...</th>
+        </tr>
+      );
+    }
+
+    return attendence.map((attendence, index) => (
+      <tr key={index}>
+        <th scope="row">{index + 1}</th>
+        <td>{attendence.date}</td>
+        <td>{attendence.hasMarked ? "Present" : ""}</td>
+        <td>
+          <button
+            className="btn-danger btn mx-2"
+            onClick={() => {
+              deleteAttendence(attendence._id);
+            }}
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    ));
+  };
+
+  // Deleting Attendence
+  const deleteAttendence = async (id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/adminfeatures/deleteattendence/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      const json = await response.json();
+      console.log(json);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className="container mt-2">
@@ -12,17 +85,18 @@ const AttendenceRecord = () => {
           <h3>Attendence Record</h3>
         </div>
         <hr />
-        <div className="d-flex">
+        <form onSubmit={submitHandler} className="d-flex">
           <input
             required
             type="email"
             name="email"
+            onChange={changeHandler}
             className="form-control"
-            // value=""
+            value={email}
             placeholder="Enter User's email"
           />
           <button className="btn btn-primary mx-2">Search</button>
-        </div>
+        </form>
         {/* Users Attendence */}
         <div className="mt-3">
           <table className="table table table-success table-striped ">
@@ -31,11 +105,18 @@ const AttendenceRecord = () => {
                 <th scope="col">#</th>
                 <th scope="col">Date</th>
                 <th scope="col">Attendence</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
-            <tbody>{/* {displayAttendence(attendence)} */}</tbody>
+            <tbody>{displayAttendence(attendence)}</tbody>
           </table>
         </div>
+        {/* Record OverView */}
+        <h6>Total Presents:</h6>
+        <p>
+          {" "}
+          <strong>{totalPresent}</strong>
+        </p>
       </div>
     </>
   );

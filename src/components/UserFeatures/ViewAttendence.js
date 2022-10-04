@@ -33,7 +33,7 @@ const ViewAttendence = () => {
         </tr>
       );
     }
-    debugger;
+
     return attendence.map((attendence, index) => (
       <tr key={index}>
         <th scope="row">{index + 1}</th>
