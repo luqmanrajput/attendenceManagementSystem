@@ -73,13 +73,12 @@ router.post(
 router.get("/viewattendence", fetchuser, async (req, res) => {
   let success = false;
   const userId = req.user.id;
-
-  const attendence = await Attendence.findOne({ user: userId });
-  if (!attendence) {
-    return res.status(400).json({ success, error: " NO attendence found" });
-  }
   try {
-    res.json({ attendence });
+    const attendence = await Attendence.find({ user: userId });
+    if (!attendence) {
+      return res.status(400).json({ success, error: " NO attendence found" });
+    }
+    res.json(attendence);
   } catch (error) {
     console.log(error);
   }

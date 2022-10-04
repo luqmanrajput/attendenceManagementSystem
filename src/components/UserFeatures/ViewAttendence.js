@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const ViewAttendence = () => {
-  const [attendence, setAttendence] = useState([]);
+  const [attendence, setAttendence] = useState(null);
 
-  const fetchingUsers = async () => {
-    try {
+  useEffect(() => {
+    const fetchingUsers = async () => {
       const response = await fetch(
         "http://localhost:5000/api/userfeatures/viewattendence",
         {
@@ -16,31 +16,27 @@ const ViewAttendence = () => {
         }
       );
       const json = await response.json();
-      setAttendence(json.attendence);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      setAttendence(json);
+    };
+    fetchingUsers();
+  }, []);
+
   const displayAttendence = (attendence) => {
-    attendence.map((attendence, index) => {
-      return (
-        <tr key={index}>
-          <th scope="row">{index + 1}</th>
-          <td>{attendence.date}</td>
-          <td>{attendence.hasMarked ? "Present" : ""}</td>
-        </tr>
-      );
-    });
+    if (!attendence.length) console.log("no attendence");
+    return attendence.map((attendence, index) => (
+      <tr key={index}>
+        <th scope="row">{index + 1}</th>
+        <td>{attendence.date}</td>
+        <td>{attendence.hasMarked ? "Present" : ""}</td>
+      </tr>
+    ));
   };
   return (
     <>
       <div className="container mt-2">
         <h3>Your attendence</h3>
-        <button className="btn btn-primary" onClick={fetchingUsers}>
-          Show
-        </button>
         <hr />
-        {/* Users data */}
+        {/* Users Attendence */}
         <div>
           <table className="table table table-success table-striped ">
             <thead>
@@ -50,12 +46,7 @@ const ViewAttendence = () => {
                 <th scope="col">Attendence</th>
               </tr>
             </thead>
-            <tbody>
-              {
-                // displaying data
-                displayAttendence(attendence)
-              }
-            </tbody>
+            <tbody>{displayAttendence(attendence)}</tbody>
           </table>
         </div>
       </div>
