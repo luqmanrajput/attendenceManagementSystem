@@ -90,13 +90,14 @@ router.delete("/deleteleaves/:id", async (req, res) => {
 });
 
 // Route for accepting leaves record for (http://localhost:5000/api/adminfeatures/acceptleaves/:id)
-router.put("/acceptleaves/:id", async (req, res) => {
+router.post("/acceptleaves/:id", async (req, res) => {
   let success = false;
   try {
-    let attendence = await Attendence.find({
+    let attendence = await Attendence.findOne({
       user: req.body.userId,
       date: req.body.leaveDate,
     });
+    console.log(attendence);
     if (attendence) {
       return res.json({ success, error: "Attendence Already Marked" });
     }
@@ -109,6 +110,34 @@ router.put("/acceptleaves/:id", async (req, res) => {
     const leave = await Leave.findByIdAndDelete(req.params.id);
     success = true;
     res.json({ success, attendence, leave });
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+// Route for Generating report  for (http://localhost:5000/api/adminfeatures/generatereport/:id)
+router.get("/generatereport/:key", async (req, res) => {
+  let success = false;
+  try {
+    const user = await User.find({ email: req.params.key });
+    if (!user) {
+      return res.status(400).json({ success, error: "User doesn't exists" });
+    }
+    const userId = user.id;
+    const attendence = await Attendence.find({ user: userId });
+    if (!attendence) {
+      return res
+        .status(400)
+        .json({ success, error: "No attendence record of the user found" });
+    }
+    const presentTypeAttend = await Attendence.find({
+      attendenceType: "present",
+    });
+    const presentCount = presentTypeAttend.length;
+    const leaveTypeAttend = await Attendence.find({ attendenceType: "leave" });
+    const leaveCount = leaveTypeAttend.length;
+    success = true;
+    res.json({ success, user, presentCount, leaveCount });
   } catch (error) {
     res.json(error);
   }

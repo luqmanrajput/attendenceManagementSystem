@@ -16,6 +16,7 @@ import About from "./components/About/About";
 import AttendenceRecord from "./components/AdminFeatures/AttendenceRecord";
 import Alerts from "./components/Alert/Alert";
 import ManageLeaves from "./components/AdminFeatures/ManageLeaves";
+import GenerateReport from "./components/AdminFeatures/GenerateReport";
 function App() {
   const [alert, setAlert] = useState(null);
   const showAlert = (message, type) => {
@@ -68,6 +69,11 @@ function App() {
             exact
             path="/AttendenceRecord"
             element={<AttendenceRecord showAlert={showAlert} />}
+          />
+          <Route
+            exact
+            path="/GenerateReport"
+            element={<GenerateReport showAlert={showAlert} />}
           />
 
           <Route

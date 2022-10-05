@@ -63,7 +63,7 @@ const ManageLeaves = (props) => {
       const response = await fetch(
         `http://localhost:5000/api/adminfeatures/acceptleaves/${id}`,
         {
-          method: "PUT",
+          method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ userId, leaveDate }),
         }

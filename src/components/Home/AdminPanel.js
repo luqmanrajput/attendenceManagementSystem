@@ -18,6 +18,9 @@ const AdminPanel = () => {
         <Link className="btn btn-primary mx-3" to="/ManageLeaves">
           Manage Leaves
         </Link>
+        <Link className="btn btn-primary mx-3" to="/GenerateReport">
+          Generate Report
+        </Link>
       </div>
     </>
   );

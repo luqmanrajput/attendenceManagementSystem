@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 const AttendenceRecord = (props) => {
   const [email, setEmail] = useState("");
   const [attendence, setAttendence] = useState(null);
-  const [totalPresent, setTotalPresent] = useState(null);
-  // const [totalLeaves, setTotalLeaves] = useState(null);
 
   const changeHandler = (e) => {
     setEmail(e.target.value);
@@ -25,7 +23,6 @@ const AttendenceRecord = (props) => {
       const json = await response.json();
       console.log(json);
       setAttendence(json.attendence);
-      setTotalPresent(json.attendence.length);
     } catch (error) {
       props.showAlert("An error occured", "danger");
     }
@@ -117,11 +114,6 @@ const AttendenceRecord = (props) => {
             <tbody>{displayAttendence(attendence)}</tbody>
           </table>
         </div>
-        {/* Record OverView */}
-        <h6>Total Presents:</h6>
-        <p>
-          <strong>{totalPresent}</strong>
-        </p>
       </div>
     </>
   );
