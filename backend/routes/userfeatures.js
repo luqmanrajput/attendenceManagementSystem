@@ -14,12 +14,13 @@ router.post("/markattendence", fetchuser, async (req, res) => {
     user: userId,
   });
   if (attendCheck) {
-    return res.status(400).json({ dateCheck });
+    return res.status(400).json({ success, dateCheck });
   }
   try {
     const attendence = await new Attendence({
       user: userId,
       date: req.body.todaysDate,
+      attendenceType: "present",
     });
     attendence.save();
     success = true;

@@ -89,4 +89,22 @@ router.delete("/deleteleaves/:id", async (req, res) => {
   }
 });
 
+// Route for accepting leaves record for (http://localhost:5000/api/adminfeatures/acceptleaves/:id)
+router.put("/acceptleaves/:id", async (req, res) => {
+  let success = false;
+  try {
+    const attendence = await new Attendence({
+      user: req.body.userId,
+      date: req.body.leaveDate,
+      attendenceType: "leave",
+    });
+    attendence.save();
+    const leave = await Leave.findByIdAndDelete(req.params.id);
+    success = true;
+    res.json({ success, attendence, leave });
+  } catch (error) {
+    res.json(error);
+  }
+});
+
 module.exports = router;

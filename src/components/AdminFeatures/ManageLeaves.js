@@ -13,6 +13,7 @@ const ManageLeaves = (props) => {
         }
       );
       const json = await response.json();
+      console.log(json);
       setLeaves(json.leaves);
     };
     fetchingLeaves();
@@ -38,11 +39,10 @@ const ManageLeaves = (props) => {
         <td>{leaves.date}</td>
         <td>{leaves.message}</td>
         <td>{leaves.category}</td>
-        <td>{leaves._id}</td>
         <td>
           <button
             className="btn-success btn mx-2"
-            onClick={() => acceptHandler(leaves._id)}
+            onClick={() => acceptHandler(leaves._id, leaves.user, leaves.date)}
           >
             Accept
           </button>
@@ -58,9 +58,27 @@ const ManageLeaves = (props) => {
   };
 
   // Accepting Leave API
-  const acceptHandler = (id) => {
-    let key = id;
-    console.log(key);
+  const acceptHandler = async (id, userId, leaveDate) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/adminfeatures/acceptleaves/${id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId, leaveDate }),
+        }
+      );
+
+      const json = await response.json();
+      console.log(json);
+      if (json.success) {
+        props.showAlert("Leave Accepted!", "success");
+      } else {
+        props.showAlert("An error occured with backend!", "danger");
+      }
+    } catch (error) {
+      props.showAlert("An error occured", "danger");
+    }
   };
   //   Deleting Leave Api
   const deleteHandler = async (id) => {
