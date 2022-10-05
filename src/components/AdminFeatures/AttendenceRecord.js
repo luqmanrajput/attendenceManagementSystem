@@ -45,7 +45,7 @@ const AttendenceRecord = (props) => {
       <tr key={index}>
         <th scope="row">{index + 1}</th>
         <td>{attendence.date}</td>
-        <td>{attendence.attendenceType.present ? "Present" : "Leave"}</td>
+        <td>{attendence.attendenceType === "present" ? "Present" : "Leave"}</td>
         <td>
           <button
             className="btn-danger btn mx-2"

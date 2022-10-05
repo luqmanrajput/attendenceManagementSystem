@@ -93,7 +93,14 @@ router.delete("/deleteleaves/:id", async (req, res) => {
 router.put("/acceptleaves/:id", async (req, res) => {
   let success = false;
   try {
-    const attendence = await new Attendence({
+    let attendence = await Attendence.find({
+      user: req.body.userId,
+      date: req.body.leaveDate,
+    });
+    if (attendence) {
+      return res.json({ success, error: "Attendence Already Marked" });
+    }
+    attendence = await new Attendence({
       user: req.body.userId,
       date: req.body.leaveDate,
       attendenceType: "leave",

@@ -74,7 +74,7 @@ const ManageLeaves = (props) => {
       if (json.success) {
         props.showAlert("Leave Accepted!", "success");
       } else {
-        props.showAlert("An error occured with backend!", "danger");
+        props.showAlert(`${json.error}`, "danger");
       }
     } catch (error) {
       props.showAlert("An error occured", "danger");
@@ -95,7 +95,7 @@ const ManageLeaves = (props) => {
       if (json.success) {
         props.showAlert("Record deleted!", "success");
       } else {
-        props.showAlert("An error occured with backend!", "danger");
+        props.showAlert(`${json.error}`, "danger");
       }
     } catch (error) {
       props.showAlert("An error occured", "danger");

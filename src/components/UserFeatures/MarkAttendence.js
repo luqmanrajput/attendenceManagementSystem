@@ -26,13 +26,12 @@ const MarkAttendence = (props) => {
         }
       );
       const json = await response.json();
-      console.log(json.success, json.dateCheck);
-      if (json.dateCheck.toString() === "false") {
+      if (json.success) {
         navigate("/UserPanel");
-        props.showAlert(`Attendence Marked Already`, "danger");
+        props.showAlert(`${json.error}`, "success");
       } else {
         navigate("/UserPanel");
-        props.showAlert(`Marked Present`, "success");
+        props.showAlert(`${json.error}`, "danger");
       }
     } catch (error) {
       console.log(error);

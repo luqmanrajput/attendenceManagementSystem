@@ -7,14 +7,13 @@ const fetchuser = require("../middleware/fetchuser");
 // Route for Marking attendence (api/userfeatures/markattendence)
 router.post("/markattendence", fetchuser, async (req, res) => {
   let success = false;
-  let dateCheck = false;
   const userId = req.user.id;
   let attendCheck = await Attendence.findOne({
     date: req.body.todaysDate,
     user: userId,
   });
   if (attendCheck) {
-    return res.status(400).json({ success, dateCheck });
+    return res.status(400).json({ success, error: "Already Marked" });
   }
   try {
     const attendence = await new Attendence({
@@ -24,9 +23,7 @@ router.post("/markattendence", fetchuser, async (req, res) => {
     });
     attendence.save();
     success = true;
-    dateCheck = true;
-    console.log(dateCheck);
-    res.json({ attendence, success, dateCheck });
+    res.json({ attendence, success, error: "Marked Present" });
   } catch (error) {
     console.log(error);
   }
