@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-const MarkAttendence = () => {
+const MarkAttendence = (props) => {
   const navigate = useNavigate();
   // Current Date
   const showDate = new Date();
@@ -29,10 +29,10 @@ const MarkAttendence = () => {
       console.log(json.success, json.dateCheck);
       if (json.dateCheck.toString() === "false") {
         navigate("/UserPanel");
-        alert("Already Marked");
+        props.showAlert(`Attendence Marked Already`, "danger");
       } else {
         navigate("/UserPanel");
-        alert("present");
+        props.showAlert(`Marked Present`, "success");
       }
     } catch (error) {
       console.log(error);

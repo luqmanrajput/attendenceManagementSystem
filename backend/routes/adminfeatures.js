@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const Attendence = require("../models/Attendence");
+const Leave = require("../models/Leave");
 // const { body, validationResult } = require("express-validator");
 // const Leave = require("../models/Leave");
 // const fetchuser = require("../middleware/fetchuser");
@@ -51,6 +52,38 @@ router.delete("/deleteattendence/:id", async (req, res) => {
     }
     success = true;
     res.json({ success, attendence });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// Route for viewing leaves for (http://localhost:5000/api/adminfeatures/manageleaves)
+
+router.get("/manageleaves", async (req, res) => {
+  let success = true;
+  try {
+    const leaves = await Leave.find({});
+    if (!leaves) {
+      return res.status(400).json({ success, error: "No leaves" });
+    }
+    success = true;
+    res.json({ success, leaves });
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+// Route for deleting leaves record for (http://localhost:5000/api/adminfeatures/deleteleaves/:id)
+
+router.delete("/deleteleaves/:id", async (req, res) => {
+  let success = false;
+  try {
+    const leave = await Leave.findByIdAndDelete(req.params.id);
+    if (!leave) {
+      return res.status(400).json({ success, error: "not deleted" });
+    }
+    success = true;
+    res.json({ success, leave });
   } catch (error) {
     console.log(error);
   }

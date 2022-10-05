@@ -34,13 +34,13 @@ const UserLogin = (props) => {
         localStorage.setItem("token", json.authToken);
         localStorage.setItem("roleCheck", json.roleCheck);
         navigate("/");
-        alert(`Welcome to eNotes!`, "success");
+        props.showAlert(`Welcome to AMS`, "success");
       } else {
-        alert(`Invalid Credentials`, "danger");
+        props.showAlert(`Invalid Credentials`, "danger");
       }
     } catch (error) {
       console.log(error);
-      alert(`An error occured`, "danger");
+      props.showAlert(`An error occured`, "danger");
     }
   };
 

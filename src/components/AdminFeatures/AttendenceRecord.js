@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const AttendenceRecord = () => {
+const AttendenceRecord = (props) => {
   const [email, setEmail] = useState("");
   const [attendence, setAttendence] = useState(null);
   const [totalPresent, setTotalPresent] = useState(null);
+  // const [totalLeaves, setTotalLeaves] = useState(null);
 
   const changeHandler = (e) => {
     setEmail(e.target.value);
@@ -26,7 +27,7 @@ const AttendenceRecord = () => {
       setAttendence(json.attendence);
       setTotalPresent(json.attendence.length);
     } catch (error) {
-      console.log(error);
+      props.showAlert("An error occured", "danger");
     }
   };
 
@@ -44,7 +45,7 @@ const AttendenceRecord = () => {
       <tr key={index}>
         <th scope="row">{index + 1}</th>
         <td>{attendence.date}</td>
-        <td>{attendence.hasMarked ? "Present" : ""}</td>
+        <td>{attendence.attendenceType.present ? "Present" : "Leave"}</td>
         <td>
           <button
             className="btn-danger btn mx-2"
@@ -71,8 +72,13 @@ const AttendenceRecord = () => {
 
       const json = await response.json();
       console.log(json);
+      if (json.success) {
+        props.showAlert("Record deleted!", "success");
+      } else {
+        props.showAlert("An error occured with backend!", "danger");
+      }
     } catch (error) {
-      console.log(error);
+      props.showAlert("An error occured", "danger");
     }
   };
   return (
@@ -114,7 +120,6 @@ const AttendenceRecord = () => {
         {/* Record OverView */}
         <h6>Total Presents:</h6>
         <p>
-          {" "}
           <strong>{totalPresent}</strong>
         </p>
       </div>

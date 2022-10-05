@@ -10,9 +10,15 @@ const AttendenceSchema = new Schema({
     type: String,
     format: Date,
   },
-  hasMarked: {
-    type: Boolean,
-    default: true,
+  attendenceType: {
+    present: {
+      type: Boolean,
+      default: true,
+    },
+    leave: {
+      type: Boolean,
+      default: false,
+    },
   },
 });
 module.exports = mongoose.model("attendence", AttendenceSchema);

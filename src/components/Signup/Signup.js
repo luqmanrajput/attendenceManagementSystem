@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Signup = () => {
+const Signup = (props) => {
   const navigate = useNavigate();
   // Creating state for form data
   const [signupData, setSignupData] = useState({
@@ -42,13 +42,15 @@ const Signup = () => {
         if (json.success) {
           localStorage.setItem("token", json.authToken);
           navigate("/UserLogin");
-          alert("Registeration Success full now you can login!");
+          props.showAlert(
+            "Registeration Success full now you can login!",
+            "success"
+          );
         } else {
-          console.log("backend error");
+          props.showAlert("An error occured with backend", "danger");
         }
       } catch (error) {
-        console.log(error);
-        alert("An error occured with failure");
+        props.showAlert("An error occured", "danger");
       }
     } else {
       alert("Passwords do not match");

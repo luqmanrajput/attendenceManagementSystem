@@ -5,6 +5,7 @@ const ViewAttendence = () => {
   const [attendence, setAttendence] = useState();
 
   useEffect(() => {
+    // Getting attendence
     const fetchingUsers = async () => {
       const response = await fetch(
         "http://localhost:5000/api/userfeatures/viewattendence",
@@ -22,6 +23,7 @@ const ViewAttendence = () => {
     fetchingUsers();
   }, []);
 
+  // Displaying attendence of user
   const displayAttendence = (attendence) => {
     if (!attendence) {
       console.log("no attendence");
@@ -38,7 +40,7 @@ const ViewAttendence = () => {
       <tr key={index}>
         <th scope="row">{index + 1}</th>
         <td>{attendence.date}</td>
-        <td>{attendence.hasMarked ? "Present" : ""}</td>
+        <td>{attendence.attendenceType.present ? "Present" : "Leave "}</td>
       </tr>
     ));
   };

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = (props) => {
   // For toggling activ class in Navbar
   const location = useLocation();
 
@@ -13,6 +13,7 @@ const Navbar = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("roleCheck");
     navigate("/UserLogin");
+    props.showAlert("logged out!", "success");
   };
   return (
     <>

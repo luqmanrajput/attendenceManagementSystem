@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-const ApplyLeave = () => {
+const ApplyLeave = (props) => {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const showDate = new Date();
@@ -33,13 +33,13 @@ const ApplyLeave = () => {
       console.log(json);
       if (json.dateCheck.toString() === "false") {
         navigate("/UserPanel");
-        alert("Leave already applied");
+        props.showAlert("Leave already applied", "danger");
       } else {
         navigate("/UserPanel");
-        alert("Request for leave submitted!");
+        props.showAlert("Request for leave submitted!", "success");
       }
     } catch (error) {
-      console.log(error);
+      props.showAlert("An error occured", "danger");
     }
   };
   return (
