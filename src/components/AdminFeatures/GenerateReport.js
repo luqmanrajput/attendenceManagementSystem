@@ -67,7 +67,7 @@ const GenerateReport = (props) => {
           data-bs-toggle="modal"
           data-bs-target="#exampleModal2"
         >
-          <i className="fa-solid fa-file-circle-plus"> Generate</i>
+          Create Report
         </button>
 
         {/* Modal  */}
