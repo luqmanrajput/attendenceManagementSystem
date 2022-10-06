@@ -43,6 +43,13 @@ router.post(
       return res.status(400).json({ success, errors: errors.array() });
     }
     const userId = req.user.id;
+    let attendCheck = await Attendence.findOne({
+      user: userId,
+      date: req.body.leaveDate,
+    });
+    if (attendCheck) {
+      return res.json({ success, error: "Already Marked" });
+    }
     let leaveCheck = await Leave.findOne({
       date: req.body.leaveDate,
       user: userId,

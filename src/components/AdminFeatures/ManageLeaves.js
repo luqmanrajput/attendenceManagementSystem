@@ -73,6 +73,19 @@ const ManageLeaves = (props) => {
       console.log(json);
       if (json.success) {
         props.showAlert("Leave Accepted!", "success");
+        // Updating displayed data
+        const fetchingLeaves = async () => {
+          const response = await fetch(
+            "http://localhost:5000/api/adminfeatures/manageleaves",
+            {
+              method: "GET",
+            }
+          );
+          const json = await response.json();
+          console.log(json);
+          setLeaves(json.leaves);
+        };
+        fetchingLeaves();
       } else {
         props.showAlert(`${json.error}`, "danger");
       }
@@ -94,6 +107,19 @@ const ManageLeaves = (props) => {
       console.log(json);
       if (json.success) {
         props.showAlert("Record deleted!", "success");
+        // Updating displayed data
+        const fetchingLeaves = async () => {
+          const response = await fetch(
+            "http://localhost:5000/api/adminfeatures/manageleaves",
+            {
+              method: "GET",
+            }
+          );
+          const json = await response.json();
+          console.log(json);
+          setLeaves(json.leaves);
+        };
+        fetchingLeaves();
       } else {
         props.showAlert(`${json.error}`, "danger");
       }

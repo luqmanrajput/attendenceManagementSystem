@@ -6,11 +6,11 @@ const MarkAttendence = (props) => {
   // Current Date
   const showDate = new Date();
   const todaysDate =
-    showDate.getDate() +
+    showDate.getFullYear() +
     "-" +
     (showDate.getMonth() + 1) +
     "-" +
-    showDate.getFullYear();
+    String(showDate.getDate()).padStart(2, "0");
   const attendenceHandler = async (e) => {
     e.preventDefault();
     try {

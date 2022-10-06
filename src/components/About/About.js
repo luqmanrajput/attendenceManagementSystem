@@ -17,8 +17,8 @@ export default class AboutUs extends Component {
                 <em>
                   <highlight>AMS</highlight> is React based web application for
                   managing attendence. It includes features like marking
-                  attendence, applying for leave and viewing the attendence. the
-                  application has been devloped using MERN STACK
+                  attendence, applying for leave and viewing the attendence.
+                  This application has been devloped using MERN STACK
                 </em>
               </p>
               <a className="aboutUsBtn" href="https://luqmanrajput.github.io/">
