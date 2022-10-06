@@ -3,9 +3,6 @@ const router = express.Router();
 const User = require("../models/User");
 const Attendence = require("../models/Attendence");
 const Leave = require("../models/Leave");
-// const { body, validationResult } = require("express-validator");
-// const Leave = require("../models/Leave");
-// const fetchuser = require("../middleware/fetchuser");
 
 // Route for getting users for (http://localhost:5000/api/adminfeatures/viewusers)
 router.get("/viewusers", async (req, res) => {
@@ -97,7 +94,6 @@ router.post("/acceptleaves/:id", async (req, res) => {
       user: req.body.userId,
       date: req.body.leaveDate,
     });
-    console.log(attendence);
     if (attendence) {
       return res.json({ success, error: "Attendence Already Marked" });
     }
@@ -138,6 +134,36 @@ router.get("/generatereport/:key", async (req, res) => {
     const leaveCount = leaveTypeAttend.length;
     success = true;
     res.json({ success, user, presentCount, leaveCount });
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+// Route for Marking attendence (api/adminfeatures/markattendence)
+router.post("/markattendence", async (req, res) => {
+  let success = false;
+
+  let users = await User.findOne({ email: req.body.attendEmail });
+  if (!users) {
+    return res.json({ success, error: "This user doesn't exists" });
+  }
+
+  let attendCheck = await Attendence.findOne({
+    date: req.body.selectedDate,
+    user: users.id,
+  });
+  if (attendCheck) {
+    return res.json({ success, error: "Already Marked" });
+  }
+  try {
+    const attendence = await new Attendence({
+      user: users.id,
+      date: req.body.selectedDate,
+      attendenceType: "present",
+    });
+    attendence.save();
+    success = true;
+    res.json({ success, error: "Marked Present" });
   } catch (error) {
     res.json(error);
   }

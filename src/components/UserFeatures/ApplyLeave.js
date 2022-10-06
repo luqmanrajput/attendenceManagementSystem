@@ -3,19 +3,13 @@ import { useNavigate, Link } from "react-router-dom";
 const ApplyLeave = (props) => {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
-  const showDate = new Date();
-  const leaveDate =
-    showDate.getDate() +
-    "-" +
-    (showDate.getMonth() + 1) +
-    "-" +
-    showDate.getFullYear();
 
   const changeHandler = (e) => {
     setMessage(e.target.value);
   };
   const leaveHandler = async (e) => {
     e.preventDefault();
+    const leaveDate = document.getElementById("date").value;
     try {
       const response = await fetch(
         "http://localhost:5000/api/userfeatures/applyleave",
@@ -31,12 +25,12 @@ const ApplyLeave = (props) => {
 
       const json = await response.json();
       console.log(json);
-      if (json.dateCheck.toString() === "false") {
+      if (json.success === false) {
         navigate("/UserPanel");
-        props.showAlert("Leave already applied", "danger");
+        props.showAlert(`${json.error}`, "danger");
       } else {
         navigate("/UserPanel");
-        props.showAlert("Request for leave submitted!", "success");
+        props.showAlert(`${json.error}`, "success");
       }
     } catch (error) {
       props.showAlert("An error occured", "danger");
@@ -58,12 +52,7 @@ const ApplyLeave = (props) => {
               Applying Leave for:
             </label>
             <br />
-            <input
-              value={leaveDate}
-              readOnly={true}
-              className="form-control"
-              required
-            />
+            <input type="date" id="date" className="form-control" required />
           </div>
           <div className="mb-3">
             <label htmlFor="exampleFormControlTextarea1" className="form-label">

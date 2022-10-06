@@ -78,6 +78,36 @@ const AttendenceRecord = (props) => {
       props.showAlert("An error occured", "danger");
     }
   };
+  // Add Attendence Module
+  const [attendEmail, setAttendEmail] = useState("");
+  const addAttendChangeHandler = (e) => {
+    setAttendEmail(e.target.value);
+  };
+  // Handling second form to add attendence
+  const addAttendSubmitHandler = async (e) => {
+    e.preventDefault();
+    let selectedDate = document.getElementById("date").value;
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/adminfeatures/markattendence",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ attendEmail, selectedDate }),
+        }
+      );
+      const json = await response.json();
+      if (json.success) {
+        props.showAlert(`${json.error}`, "success");
+      } else {
+        props.showAlert(`${json.error}`, "danger");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className="container mt-2">
@@ -100,6 +130,83 @@ const AttendenceRecord = (props) => {
           />
           <button className="btn btn-primary mx-2">Search</button>
         </form>
+
+        {/* Adding Attendence */}
+
+        {/* Button trigger modal  */}
+        <button
+          type="button"
+          className="btn btn-primary mt-3"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal2"
+        >
+          <i className="fa-solid fa-file-circle-plus"> Add Attendence</i>
+        </button>
+
+        {/* Modal  */}
+        <div
+          className="modal fade"
+          id="exampleModal2"
+          tabIndex="-1"
+          aria-labelledby="exampleModalLabel2"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel2">
+                  Add Attendence
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body">
+                {/* Form */}
+                <form onSubmit={addAttendSubmitHandler}>
+                  <div className="mb-3">
+                    <label htmlFor="email" className="form-label">
+                      Email:
+                    </label>
+                    <input
+                      type="email"
+                      className="form-control"
+                      id="email"
+                      name="email"
+                      value={attendEmail}
+                      onChange={addAttendChangeHandler}
+                      required
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="date" className="form-label">
+                      Date:
+                    </label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      id="date"
+                      name="date"
+                      required
+                    />
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      data-bs-dismiss="modal"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
         {/* Users Attendence */}
         <div className="mt-3">
           <table className="table table table-success table-striped ">

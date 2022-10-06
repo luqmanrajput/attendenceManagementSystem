@@ -42,14 +42,13 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ success, errors: errors.array() });
     }
-    let dateCheck = false;
     const userId = req.user.id;
     let leaveCheck = await Leave.findOne({
       date: req.body.leaveDate,
       user: userId,
     });
     if (leaveCheck) {
-      return res.status(400).json({ dateCheck });
+      return res.json({ success, error: "Already marked" });
     }
     try {
       const leave = await new Leave({
@@ -59,8 +58,7 @@ router.post(
       });
       leave.save();
       success = true;
-      dateCheck = true;
-      res.json({ success, dateCheck });
+      res.json({ success, error: "Leave reuest submitted" });
     } catch (error) {
       console.log(error);
     }
